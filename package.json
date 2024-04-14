@@ -1,6 +1,6 @@
 {
   "name": "acp-git-commands",
-  "displayName": "ACP Quickly Git Add, Commit & Push",
+  "displayName": "Git ACP Quickly Add, Commit & Push",
   "publisher": "AhmadNYC",
   "description": "Adds a custom function to your shell configuration to Git Add, Commit & Push with a single command!",
   "repository": {
