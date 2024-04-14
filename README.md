@@ -1,6 +1,6 @@
 # ACP Quickly: Git Add, Commit & Push with a Single Command. No ""
 
-This Visual Studio Code extension streamlines the git workflow by enabling you to add, commit, and push changes with a single command, without the need for quotation marks. It's perfect for developers seeking to enhance their version control operations within VS Code.
+This extension streamlines the git workflow by enabling you to add, commit, and push changes with a single command, without the need for quotation marks.
 
 - **Successful Push**
 

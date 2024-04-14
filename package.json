@@ -1,0 +1,49 @@
+{
+  "name": "acp-git-commands",
+  "displayName": "ACP Quickly Git Add, Commit & Push",
+  "publisher": "AhmadNYC",
+  "description": "Adds a custom function to your shell configuration to Git Add, Commit & Push with a single command!",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AhmxdNYC/GIT-ACP-Shortcut-Extension"
+  },
+  "icon": "images/icon.ico",
+  "version": "0.1.5",
+  "engines": {
+    "vscode": "^1.88.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:acp-git-commands.installACPCommand"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "acp-git-commands.installACPCommand",
+        "title": "Install ACP Command"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.88.0",
+    "@vscode/test-cli": "^0.0.8",
+    "@vscode/test-electron": "^2.3.9",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "fast-xml-parser": "^4.3.6",
+    "vsce": "^2.15.0"
+  }
+}
