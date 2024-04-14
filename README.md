@@ -59,7 +59,7 @@ No known issues at this time. Please contact me with any issues you are experien
 
 ## Release Notes
 
-### 1.0.0
+### 0.1.6
 
 - Initial release of "ACP Quickly Git Add, Commit & Push with a Single Command!"
 
