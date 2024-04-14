@@ -46,7 +46,9 @@ function activate(context) {
 
       const acpFunction = `
 function acp() {
-
+  #
+  #
+  #
 
 echo -e "Adding \\e[36mall\\e[0m changes..."
 git add -A
