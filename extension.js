@@ -74,7 +74,7 @@ function activate(context) {
           echo "Up-to-date with remote. No pull needed."
         elif [ "$local_commit" = "$base_commit" ]; then
           echo -e "\\n\\x1b[31mYour local branch is behind the remote branch.\\x1b[0m\\n"
-          echo -e "Pull required before push. Please run: \\x1b[33m'git pull'\\x1b[0m\\n"
+          echo -e "Pull required before push. Please run: \\x1b[33m'git pull'\\x1b[0m\\n."
           return
         elif [ "$remote_commit" = "$base_commit" ]; then
           echo "Local commits can be pushed."
