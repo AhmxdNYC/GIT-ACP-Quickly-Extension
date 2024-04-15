@@ -109,7 +109,7 @@ function activate(context) {
         fi
       }      
 `
-
+      //
       try {
         let content = fs.readFileSync(shellConfigFilePath, "utf8")
         if (content.includes(acpFunctionSignature)) {
