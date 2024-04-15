@@ -79,7 +79,7 @@ function activate(context) {
         elif [ "$remote_commit" = "$base_commit" ]; then
           echo "Local commits can be pushed."
         else
-          echo -e "\\n\\x1b[33mDiverged from remote. Manual merge required & manual ACP.\\x1b[0m\\n"
+          echo -e "\\n\\x1b[33mDiverged from remote. Manual merge required & manual Git commands.\\x1b[0m\\n"
           echo -e "Please run: \\x1b[33m'git pull'\\x1b[0m & \\x1b[33m'git status'\\x1b[0m to see conflicts and resolve them manually.\\n"
           return
         fi
