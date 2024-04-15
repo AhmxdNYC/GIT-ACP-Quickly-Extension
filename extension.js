@@ -50,6 +50,7 @@ function activate(context) {
       const newAcpFunction = `
 function acp() {
 
+
   
   echo -e "Checking repository status..."
   # Additional script logic here...
