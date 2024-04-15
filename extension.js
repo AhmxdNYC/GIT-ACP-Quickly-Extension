@@ -99,7 +99,7 @@ function activate(context) {
           echo "Successfully committed. Pushing \\x1b[36mto\\x1b[0m remote..."
           git push
           if [[ $? -eq 0 ]]; then
-            echo -e "\\n\\x1b[36mCommit Message: $commit_message\\x1b[0m"
+            echo -e "\\n\\x1b[36mCommit Message: $commit_message\\x1b[0m\\n"
             echo -e "\\x1b[32m----> Push Successful <----\\x1b[0m\\n"
           else
             echo -e "\\n\\x1b[31m----> Push FAILED <----\\x1b[0m\\n"
