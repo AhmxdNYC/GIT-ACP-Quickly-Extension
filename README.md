@@ -26,17 +26,20 @@ Visual demonstrations of the extension in action:
   ![Commit Failed](./images/CommitFailed.gif)
 
 - **Pull Before ACP**
-- <sub>_Won't add or commit if pull needed._</sub>
+
+  - <sub>_Won't add or commit if pull needed._</sub>
 
   ![Pull First](./images/PullFirst.png)
 
 - **Diverged from Remote**
-- <sub>_When your local and remote branches have diverged, Must use normal git commands._</sub>
+
+  - <sub>_When your local and remote branches have diverged, Must use normal git commands._</sub>
 
   ![Diverged from Remote](./images/DivergedBranches.png)
 
 - **No Upstream Set**
-- <sub>_checks if your branch has an upstream set before ACP. If not, it instructs how to set one._</sub>
+
+  - <sub>_checks if your branch has an upstream set before ACP. If not, it instructs how to set one._</sub>
 
   ![No Upstream Set](./images/NoUpstream.png)
 
@@ -45,7 +48,7 @@ Visual demonstrations of the extension in action:
   ![No Repo](./images/NoRepo.png)
 
 - **Extras**
-- <sub>_Won't allow ACP from a detached state_.</sub>
+  - <sub>_Won't allow ACP from a detached state_.</sub>
 
 ## Installation
 
@@ -76,6 +79,9 @@ No known issues at this time. Please contact me with any issues you are experien
 
 ## Release Notes
 
+<details>
+  <summary><strong>Notes!</strong> </summary>
+
 ### 0.6.0
 
 - **New Feature**: Added error handling for commands run outside of Git repositories to enhance user feedback.
@@ -99,6 +105,8 @@ No known issues at this time. Please contact me with any issues you are experien
 ### 0.1.0
 
 - **Initial Release**: Set up the basic functionality of the ACP command, laying the foundation for future enhancements.
+
+</details>
 
 ## For more information
 

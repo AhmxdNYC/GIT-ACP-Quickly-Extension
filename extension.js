@@ -49,7 +49,7 @@ function getShellConfigFilePath() {
 // Function to update the ACP command in the user's shell configuration file
 
 function updateAcpCommand(shellConfigFilePath) {
-  const currentVersion = "0.6.0" // The version should be updated in sync with the extension's version in package.json
+  const currentVersion = "0.6.4" // The version should be updated in sync with the extension's version in package.json
   const versionRegex = /# ACP Version: (\d+\.\d+\.\d+)/ // Regex to extract the version
   const startMarker = "# BEGIN: ACP Function"
   const endMarker = "# END: ACP Function"
@@ -183,3 +183,13 @@ module.exports = {
   activate,
   deactivate,
 }
+
+// two version of extension
+// quickly : acp-git-commands
+// enhanced : git-acp-enhanced
+// {
+//   "name": "acp-git-commands",
+//   "displayName": "Git ACP Quickly Add, Commit & Push",
+//   "publisher": "AhmadNYC",
+
+// Git ACP Enhanced: Add, Commit, Push   // second display name
