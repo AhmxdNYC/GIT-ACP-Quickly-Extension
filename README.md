@@ -10,9 +10,10 @@ This extension streamlines the git workflow by enabling you to add, commit, and 
 
 ## Features
 
-- **Efficient Git Operations**: Execute a single command to add all changes, commit them with your specified message, and push to a remote repository—all directly from the editor.
-- **Customizable Commit Messages**: Input commit messages directly within the command, facilitating rapid updates and meaningful commit logs.
-- **Broad Shell Compatibility**: Works seamlessly across bash, zsh, and Windows Command Line, ensuring reliable functionality no matter your development environment.
+- **Efficient Git Operations**: Perform git add, commit, and push operations with a single command directly from your editor.
+- **Forced Remote Sync**: Automatically ensures you're up-to-date with the remote repository before allowing pushes, keeping your workflow smooth and conflict-free.
+- **Customizable Commit Messages**: Directly type commit messages into the command, enabling quick updates and clear logs.
+- **Cross-Shell Compatibility**: Supports bash, zsh, and Windows Command Line, making it versatile across different environments.
 
 ## Example Usage
 
@@ -24,6 +25,11 @@ Visual demonstrations of the extension in action:
 
   ![Commit Failed](./images/CommitFailed.gif)
 
+- **Pull Before ACP**
+- <sub>Won't add or commit</sub>
+
+  ![Pull First](./images/PullFirst.png)
+
 - **No Repository Found**
 
   ![No Repo](./images/NoRepo.png)
@@ -31,27 +37,25 @@ Visual demonstrations of the extension in action:
 ## Installation
 
 1. **Install the Extension**: Download and install the extension from the Visual Studio Code Marketplace.
-2. **Activate the Command**: Use the command palette (`Ctrl+Shift+P` or `Cmd+Shift+P` on macOS) and type:
-   - `Install ACP Command`: You will be prompted to enter a commit message. Your changes will then be committed and pushed to the configured remote repository.
-3. **Restart Your Terminal**: To ensure the changes take effect, restart or refresh your terminal.
+2. **Restart Terminals**:
 
-[Watch a 30-second tutorial on how to use ACP Quickly](https://www.youtube.com/watch?v=2lgWcGbtaz4)
+3. **Thats it!**
 
 ## Usage Warning
 
 - **Special Characters**: The `acp` command supports commit messages without quotation marks for simple texts. For including special characters (e.g., `!#^@&^@$@()&*&(!!!>:<{|}>`), you will still need to encapsulate the message in quotes like this:
 
-- acp " !#^@&^@$@()&\*&(!!!>:<{|}> "
+- acp " !#^@&^@$@()& \*&()!!!>:<{|}> "
 
 ## Requirements
 
-No additional requirements are needed for this extension, as it uses your existing git setup. Just restart or terminate your terminals after installation.
+No additional requirements are needed for this extension except git duh, as it uses your existing git setup. Just restart or terminate your terminals after installation.
 
 ## Extension Settings
 
 This extension does not require specific settings for basic operation but depends on your existing git configuration.
 
-To fully remove the extension, go into the config (zshrc or bash) file and delete the code for the acp function.
+To fully remove or edit the extension code, go into the config (zshrc or bash) file and delete the code for the acp function.
 
 ## Known Issues
 
@@ -59,9 +63,29 @@ No known issues at this time. Please contact me with any issues you are experien
 
 ## Release Notes
 
-### 0.1.6
+### 0.6.0
 
-- Initial release of "ACP Quickly Git Add, Commit & Push with a Single Command!"
+- **New Feature**: Added error handling for commands run outside of Git repositories to enhance user feedback.
+
+### 0.5.0
+
+- **Version Checking**: Integrated version checking to ensure users always run the latest ACP command script.
+
+### 0.4.0
+
+- **Branch Sync Enhancements**: Enhanced the extension to handle local branch comparisons with remote, manage divergences, and ensure required pulls are made before pushing.
+
+### 0.3.0
+
+- **Automatic Updates**: Implemented automatic updates for the ACP function to synchronize with extension updates.
+
+### 0.2.0
+
+- **Detached Head and Upstream Handling**: Added handling for detached HEAD states and upstream branch settings, improving stability and usability.
+
+### 0.1.0
+
+- **Initial Release**: Set up the basic functionality of the ACP command, laying the foundation for future enhancements.
 
 ## For more information
 
@@ -69,5 +93,5 @@ No known issues at this time. Please contact me with any issues you are experien
 - [My Linkedin](https://www.linkedin.com/in/ahmad-hamza-/)
 
 **Enjoy using ACP Quickly! This tool is designed to make your coding and version control process smoother and faster.**
-- trying to cause conflict !!!!!!!!
+
 # GIT-ACP-Shortcut-Extension
