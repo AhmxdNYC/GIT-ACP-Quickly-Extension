@@ -30,9 +30,17 @@ Visual demonstrations of the extension in action:
 
   ![Pull First](./images/PullFirst.png)
 
+- **Diverged from Remote**
+- <sub>When your local and remote branches have diverged, Must use normal git commands.</sub>
+
+  ![Diverged from Remote](./images/DivergedBranches.png)
+
 - **No Repository Found**
 
   ![No Repo](./images/NoRepo.png)
+
+- **Extras**
+- <sub>Won't allow ACP from a detached state</sub>
 
 ## Installation
 
