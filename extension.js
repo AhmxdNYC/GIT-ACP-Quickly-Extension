@@ -44,66 +44,66 @@ function activate(context) {
           break
       }
 
-      const acpFunction = `
-function acp() {
-  #
-  #
-  #
-  #
-
-
-echo -e "Adding \\e[36mall\\e[0m changes..."
-git add -A
-
-# Check if at least one argument is provided
-if [ \$# -eq 0 ]; then
-echo -e "\\n\\e[31mError: No commit message provided.\\e[0m\\n"
-return 1  # Return with error
-fi
-
-# Use all arguments as the commit message
-commit_message="\$*"
-echo -e "Committing \\e[36mwith\\e[0m message: '\$commit_message'"
-
-git commit -m "\$commit_message"
-if [[ \$? -eq 0 ]]; then
-echo -e "Successfully committed. Pushing \\e[36mto\\e[0m remote..."
-git push
-if [[ \$? -eq 0 ]]; then
-    echo -e "\\n\\e[36mCommit Message:\\e[0m \$commit_message\\n"  # Cyan for "Commit Message:" label only
-    echo -e "\\e[32m----> Push Successful <----\\e[0m\\n"
-else
-    echo -e "\\n\\e[31m----> Push FAILED <----\\e[0m\\n"
-fi
-else
-echo -e "\\n\\e[31m----> Commit FAILED <----\\e[0m\\n"
-fi
-}
-`
       const userHomeDir = os.homedir()
       const shellConfigFilePath = path.join(userHomeDir, shellConfigFile)
+      const acpFunctionSignature = "function acp() {" // Signature to check if update is needed
+      const newAcpFunction = `
+function acp() {
+
+  
+  echo -e "Checking repository status..."
+  # Additional script logic here...
+
+  echo -e "Adding \\e[36mall\\e[0m changes..."
+  git add -A
+
+  # Check if at least one argument is provided
+  if [ \$# -eq 0 ]; then
+    echo -e "\\n\\e[31mError: No commit message provided.\\e[0m\\n"
+    return 1  # Return with error
+  fi
+
+  # Use all arguments as the commit message
+  commit_message="\$*"
+  echo -e "Committing \\e[36mwith\\e[0m message: '\$commit_message'"
+  git commit -m "\$commit_message"
+  if [[ \$? -eq 0 ]]; then
+    echo "Successfully committed. Pushing \\e[36mto\\e[0m remote..."
+    git push
+    if [[ \$? -eq 0 ]]; then
+    echo -e "\\n\\e[36mCommit Message:\\e[0m \$commit_message\\n"  
+    echo -e "\\e[32m----> Push Successful <----\\e[0m\\n" 
+    else
+      echo -e "\\n\\e[31m----> Push FAILED <----\\e[0m\\n"
+    fi
+  else
+    echo -e "\\n\\e[31m----> Commit FAILED <----\\e[0m\\n"
+  fi
+}
+`
 
       try {
-        // Check if the shell configuration file exists
-        if (!fs.existsSync(shellConfigFilePath)) {
-          vscode.window.showErrorMessage(
-            `Could not find ${shellConfigFile} file in your home directory`
+        let content = fs.readFileSync(shellConfigFilePath, "utf8")
+        if (content.includes(acpFunctionSignature)) {
+          // Remove the old acp function if it exists
+          let updatedContent = content.replace(
+            /function acp\(\) \{[^]*?\n\}/g,
+            ""
           )
-          return
+          fs.writeFileSync(shellConfigFilePath, updatedContent)
         }
 
-        // Append the acp function to the shell configuration file
-        fs.appendFileSync(shellConfigFilePath, acpFunction)
-
+        // Append the updated acp function to the shell configuration file
+        fs.appendFileSync(shellConfigFilePath, newAcpFunction)
         vscode.window.showInformationMessage(
-          `ACP Command successfully installed in ${shellConfigFile}`
+          `ACP Command successfully updated in ${shellConfigFile}`
         )
         vscode.window.showInformationMessage(
           `Please restart your terminal or source your ${shellConfigFile} for changes to take effect.`
         )
       } catch (error) {
         vscode.window.showErrorMessage(
-          `Error occurred while installing ACP command: ${error.message}`
+          `Error occurred while updating ACP command: ${error.message}`
         )
       }
     }
