@@ -108,7 +108,7 @@ function activate(context) {
           echo -e "\\n\\x1b[31m----> Commit FAILED <----\\x1b[0m\\n"
         fi
       }      
-`
+` //
       ////
       try {
         let content = fs.readFileSync(shellConfigFilePath, "utf8")
