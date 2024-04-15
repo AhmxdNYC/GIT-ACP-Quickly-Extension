@@ -26,21 +26,26 @@ Visual demonstrations of the extension in action:
   ![Commit Failed](./images/CommitFailed.gif)
 
 - **Pull Before ACP**
-- <sub>Won't add or commit</sub>
+- <sub>_Won't add or commit if pull needed._</sub>
 
   ![Pull First](./images/PullFirst.png)
 
 - **Diverged from Remote**
-- <sub>When your local and remote branches have diverged, Must use normal git commands.</sub>
+- <sub>_When your local and remote branches have diverged, Must use normal git commands._</sub>
 
   ![Diverged from Remote](./images/DivergedBranches.png)
+
+- **No Upstream Set**
+- <sub>_checks if your branch has an upstream set before ACP. If not, it instructs how to set one._</sub>
+
+  ![No Upstream Set](./images/NoUpstream.png)
 
 - **No Repository Found**
 
   ![No Repo](./images/NoRepo.png)
 
 - **Extras**
-- <sub>Won't allow ACP from a detached state</sub>
+- <sub>_Won't allow ACP from a detached state_.</sub>
 
 ## Installation
 
@@ -63,7 +68,7 @@ No additional requirements are needed for this extension except git duh, as it u
 
 This extension does not require specific settings for basic operation but depends on your existing git configuration.
 
-To fully remove or edit the extension code, go into the config (zshrc or bash) file and delete the code for the acp function.
+To fully **remove** or **edit** the extension code, go into the config (zshrc or bash) file and delete the code for the acp function.
 
 ## Known Issues
 

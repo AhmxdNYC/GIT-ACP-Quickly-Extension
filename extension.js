@@ -49,7 +49,7 @@ function getShellConfigFilePath() {
 // Function to update the ACP command in the user's shell configuration file
 
 function updateAcpCommand(shellConfigFilePath) {
-  const currentVersion = "0.3.1" // The version should be updated in sync with the extension's version in package.json
+  const currentVersion = "0.6.0" // The version should be updated in sync with the extension's version in package.json
   const versionRegex = /# ACP Version: (\d+\.\d+\.\d+)/ // Regex to extract the version
   const startMarker = "# BEGIN: ACP Function"
   const endMarker = "# END: ACP Function"
@@ -121,8 +121,9 @@ function acp() {
   # Check if the current branch has an upstream set
 
   if ! git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then
-    echo -e "\\n\\x1b[31mError: No upstream set for the current branch '$current_branch'.\\x1b[0m"
-    echo -e "To push and set the remote as upstream, use:\\n\\x1b[33m'git push --set-upstream origin $current_branch'\\x1b[0m\\n"
+  echo -e "\n\x1b[31mError: No upstream set for the current branch '$current_branch'.\x1b[0m"
+  echo -e "\\nTo push and set the remote as upstream, use:"
+  echo -e "\\n\\x1b[33m'git push --set-upstream origin $current_branch'\\x1b[0m\\n"
     return
   fi
 
