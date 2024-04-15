@@ -8,48 +8,39 @@ function activate(context) {
     'Congratulations, your extension "ACP-GIT-COMMAND" is now ACTIVE!'
   )
 
+  // Automatically attempt to update the ACP command when the extension activates
+  autoUpdateAcpCommand()
+
+  // This command allows manual update, but you may consider removing or leaving it for manual refresh purposes
   let disposable = vscode.commands.registerCommand(
     "acp-git-commands.installACPCommand",
-    async function () {
-      const options = [
-        ".zshrc (usually for macOS)",
-        ".bash (usually for Linux/Windows)",
-        "Detect based on system",
-      ]
-      const selectedOption = await vscode.window.showQuickPick(options, {
-        placeHolder: "Select where to install the ACP command",
-      })
-
-      if (!selectedOption) {
-        vscode.window.showErrorMessage("No option selected")
-        return
+    function () {
+      const shellConfigFilePath = getShellConfigFilePath()
+      if (shellConfigFilePath) {
+        updateAcpCommand(shellConfigFilePath)
       }
-
-      let shellConfigFile
-      switch (selectedOption) {
-        case ".zshrc (usually for macOS)":
-          shellConfigFile = ".zshrc"
-          break
-        case ".bash (usually for Linux/Windows)":
-          shellConfigFile =
-            os.platform() === "win32" ? ".bash_profile" : ".bashrc"
-          break
-        case "Detect based on system":
-          shellConfigFile =
-            os.platform() === "darwin"
-              ? ".zshrc"
-              : os.platform() === "win32"
-              ? ".bash_profile"
-              : ".bashrc"
-          break
-      }
-
-      const shellConfigFilePath = path.join(os.homedir(), shellConfigFile)
-      updateAcpCommand(shellConfigFilePath)
     }
   )
 
   context.subscriptions.push(disposable)
+}
+
+function autoUpdateAcpCommand() {
+  const shellConfigFilePath = getShellConfigFilePath()
+  if (shellConfigFilePath) {
+    updateAcpCommand(shellConfigFilePath)
+  }
+}
+
+function getShellConfigFilePath() {
+  const shellConfigFiles = {
+    darwin: ".zshrc", // macOS typically uses Zsh nowadays
+    linux: ".bashrc", // Linux typically uses Bash
+    win32: ".bash_profile", // Windows might use Bash if using Git Bash or similar
+  }
+
+  const shellConfigFile = shellConfigFiles[os.platform()]
+  return shellConfigFile ? path.join(os.homedir(), shellConfigFile) : null
 }
 
 function updateAcpCommand(shellConfigFilePath) {
@@ -60,7 +51,7 @@ function updateAcpCommand(shellConfigFilePath) {
   try {
     let content = fs.readFileSync(shellConfigFilePath, "utf8")
     let startIndex = content.indexOf(startMarker)
-    let endIndex = content.indexOf(endMarker)
+    let endIndex = content.indexOf(endMarker, startIndex + startMarker.length)
 
     if (startIndex !== -1 && endIndex !== -1) {
       endIndex += endMarker.length // Include the end marker length to remove it entirely
@@ -73,7 +64,7 @@ function updateAcpCommand(shellConfigFilePath) {
 
     fs.writeFileSync(shellConfigFilePath, content)
     vscode.window.showInformationMessage(
-      `ACP Command successfully updated in ${shellConfigFilePath}`
+      `ACP Command automatically updated in ${shellConfigFilePath}`
     )
   } catch (error) {
     vscode.window.showErrorMessage(
@@ -144,7 +135,7 @@ function acp() {
   else
     echo -e "\\n\\x1b[31m----> Commit FAILED <----\\x1b[0m\\n"
   fi
-}      
+}
 # END: ACP Function
 `
 }
