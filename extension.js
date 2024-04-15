@@ -134,7 +134,7 @@ function activate(context) {
       }
     }
   )
-
+  //
   context.subscriptions.push(disposable)
 }
 //
