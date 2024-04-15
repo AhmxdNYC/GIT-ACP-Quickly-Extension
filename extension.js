@@ -95,25 +95,25 @@ function acp() {
   fi
 
   git fetch origin
-  local current_branch=\$(git rev-parse --abbrev-ref HEAD)
+  local current_branch=$(git rev-parse --abbrev-ref HEAD)
 
   if ! git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then
-    echo -e "\\n\\x1b[31mError: No upstream set for the current branch '\$current_branch'.\\x1b[0m"
-    echo -e "To push and set the remote as upstream, use:\\n\\x1b[33m'git push --set-upstream origin \$current_branch'\\x1b[0m\\n"
+    echo -e "\\n\\x1b[31mError: No upstream set for the current branch '$current_branch'.\\x1b[0m"
+    echo -e "To push and set the remote as upstream, use:\\n\\x1b[33m'git push --set-upstream origin $current_branch'\\x1b[0m\\n"
     return
   fi
 
-  local local_commit=\$(git rev-parse @)
-  local remote_commit=\$(git rev-parse @{u})
-  local base_commit=\$(git merge-base @ @{u})
+  local local_commit=$(git rev-parse @)
+  local remote_commit=$(git rev-parse @{u})
+  local base_commit=$(git merge-base @ @{u})
 
-  if [ "\$local_commit" = "\$remote_commit" ]; then
+  if [ "$local_commit" = "$remote_commit" ]; then
     echo "Up-to-date with remote. No pull needed."
-  elif [ "\$local_commit" = "\$base_commit" ]; then
-    echo -e "\\n\\x1b[31mYour local branch is behind the remote branch.\\x1b[0m"
+  elif [ "$local_commit" = "$base_commit" ]; then
+    echo -e "\\n\\x1b[31mYour local branch is behind the remote branch.\\x1b[0m\\n"
     echo -e "Pull required before push. Please run: \\x1b[33m'git pull'\\x1b[0m.\\n"
     return
-  elif [ "\$remote_commit" = "\$base_commit" ]; then
+  elif [ "$remote_commit" = "$base_commit" ]; then
     echo "Local commits can be pushed."
   else
     echo -e "\\n\\x1b[33mDiverged from remote. Manual merge required & manual Git commands.\\x1b[0m\\n"
@@ -129,14 +129,14 @@ function acp() {
     return 1
   fi
 
-  commit_message="\$*"
-  echo -e "Committing \\x1b[36mwith\\x1b[0m message: '\$commit_message'"
-  git commit -m "\$commit_message"
-  if [[ \$? -eq 0 ]]; then
+  commit_message="$*"
+  echo -e "Committing \\x1b[36mwith\\x1b[0m message: '$commit_message'"
+  git commit -m "$commit_message"
+  if [[ $? -eq 0 ]]; then
     echo "Successfully committed. Pushing \\x1b[36mto\\x1b[0m remote..."
     git push
-    if [[ \$? -eq 0 ]]; then
-      echo -e "\\n\\x1b[36mCommit Message: \$commit_message\\x1b[0m\\n"
+    if [[ $? -eq 0 ]]; then
+      echo -e "\\n\\x1b[36mCommit Message:\\x1b[0m $commit_message\\n"
       echo -e "\\x1b[32m----> Push Successful <----\\x1b[0m\\n"
     else
       echo -e "\\n\\x1b[31m----> Push FAILED <----\\x1b[0m\\n"
@@ -144,7 +144,7 @@ function acp() {
   else
     echo -e "\\n\\x1b[31m----> Commit FAILED <----\\x1b[0m\\n"
   fi
-}
+}      
 # END: ACP Function
 `
 }
