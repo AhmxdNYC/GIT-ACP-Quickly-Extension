@@ -52,10 +52,16 @@ Visual demonstrations of the extension in action:
 
 ## Installation
 
-1. **Install the Extension**: Download and install the extension from the Visual Studio Code Marketplace.
-2. **Restart Terminals**:
+1. **Install the Extension**:
+   Download and install the extension from the Visual Studio Code Marketplace.
 
-3. **Thats it!**
+2. **Activate the Command**: Use the command palette or (`Ctrl+Shift+P` or `Cmd+Shift+P` on macOS) and type:
+   - `Install ACP Command`: You should receive a notification that your shell file has been updated.
+3. **Restart Your Terminal**: To ensure the changes take effect, restart or refresh your terminal.
+
+4. **Thats it!**
+
+[Watch a 30-second tutorial on how to use ACP Quickly](https://www.youtube.com/watch?v=2lgWcGbtaz4)
 
 ## Usage Warning
 

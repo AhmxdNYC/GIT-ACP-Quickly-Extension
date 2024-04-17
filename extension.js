@@ -7,16 +7,14 @@ function activate(context) {
   console.log(
     'Congratulations, your extension "ACP-GIT-COMMAND" is now ACTIVE!'
   )
-
-  // Automatically attempt to update the ACP command when the extension activates
-  autoUpdateAcpCommand()
+  autoUpdateAcpCommand() // Ensure this is called to check for updates immediately upon activation.
 
   let disposable = vscode.commands.registerCommand(
     "acp-git-commands.installACPCommand",
     function () {
       const shellConfigFilePath = getShellConfigFilePath()
       if (shellConfigFilePath) {
-        updateAcpCommand(shellConfigFilePath)
+        updateAcpCommand(shellConfigFilePath, true) // Force update when manually triggered.
       }
     }
   )
@@ -24,68 +22,59 @@ function activate(context) {
   context.subscriptions.push(disposable)
 }
 
-// Function to automatically update the ACP command in the user's shell configuration file
-
 function autoUpdateAcpCommand() {
   const shellConfigFilePath = getShellConfigFilePath()
   if (shellConfigFilePath) {
-    updateAcpCommand(shellConfigFilePath)
+    updateAcpCommand(shellConfigFilePath, false) // No force update, just check version.
   }
 }
 
-// Function to get the shell configuration file path based on the user's operating system
-
 function getShellConfigFilePath() {
   const shellConfigFiles = {
-    darwin: ".zshrc", // macOS typically uses Zsh
-    linux: ".bashrc", // Linux typically uses Bash
-    win32: ".bash_profile", // Windows might use Bash if using Git Bash or similar
+    darwin: ".zshrc",
+    linux: ".bashrc",
+    win32: ".bash_profile",
   }
 
   const shellConfigFile = shellConfigFiles[os.platform()]
   return shellConfigFile ? path.join(os.homedir(), shellConfigFile) : null
 }
 
-// Function to update the ACP command in the user's shell configuration file
-
-function updateAcpCommand(shellConfigFilePath) {
-  const currentVersion = "0.6.4" // The version should be updated in sync with the extension's version in package.json
-  const versionRegex = /# ACP Version: (\d+\.\d+\.\d+)/ // Regex to extract the version
-  const startMarker = "# BEGIN: ACP Function"
-  const endMarker = "# END: ACP Function"
+function updateAcpCommand(shellConfigFilePath, forceUpdate) {
+  const currentVersion = "0.6.8" // Update this as needed.
   const newAcpFunction = getNewAcpFunction(currentVersion)
 
   try {
     let content = fs.readFileSync(shellConfigFilePath, "utf8")
+    const versionRegex = /# ACP Version: (\d+\.\d+\.\d+)/
     const existingVersionMatch = content.match(versionRegex)
     const existingVersion = existingVersionMatch
       ? existingVersionMatch[1]
       : null
 
-    if (existingVersion !== currentVersion) {
+    if (existingVersion !== currentVersion || forceUpdate) {
+      const startMarker = "# BEGIN: ACP Function"
+      const endMarker = "# END: ACP Function"
       let startIndex = content.indexOf(startMarker)
-      let endIndex = content.indexOf(endMarker, startIndex + startMarker.length)
+      let endIndex = content.indexOf(endMarker, startIndex)
 
       if (startIndex !== -1 && endIndex !== -1) {
-        endIndex += endMarker.length // Include the end marker length to remove it entirely
+        endIndex += endMarker.length
         let beforeFunction = content.substring(0, startIndex)
         let afterFunction = content.substring(endIndex)
         content = beforeFunction + newAcpFunction + afterFunction
       } else {
         content += `\n${newAcpFunction}`
       }
-      // Write the updated content back to the shell configuration file
 
       fs.writeFileSync(shellConfigFilePath, content)
       vscode.window.showInformationMessage(
-        `ACP Command automatically updated to version ${currentVersion} in ${shellConfigFilePath}`
+        `ACP Command updated to version ${currentVersion}.`
       )
-    } else {
-      console.log("No update needed for ACP Command.")
     }
   } catch (error) {
     vscode.window.showErrorMessage(
-      `Error occurred while updating ACP command: ${error.message}`
+      `Failed to update ACP command: ${error.message}`
     )
   }
 }
