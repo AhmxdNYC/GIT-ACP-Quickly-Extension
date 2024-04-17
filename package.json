@@ -16,6 +16,7 @@
     "Other"
   ],
   "activationEvents": [
+    "*",
     "onCommand:acp-git-commands.installACPCommand"
   ],
   "main": "./extension.js",

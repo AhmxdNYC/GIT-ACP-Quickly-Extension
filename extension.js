@@ -7,25 +7,31 @@ function activate(context) {
   console.log(
     'Congratulations, your extension "ACP-GIT-COMMAND" is now ACTIVE!'
   )
-  autoUpdateAcpCommand() // Ensure this is called to check for updates immediately upon activation.
+
+  const wasUpdated = autoUpdateAcpCommand()
+  if (wasUpdated) {
+    vscode.window.showInformationMessage("ACP command was updated")
+  }
 
   let disposable = vscode.commands.registerCommand(
     "acp-git-commands.installACPCommand",
     function () {
-      const shellConfigFilePath = getShellConfigFilePath()
-      if (shellConfigFilePath) {
-        updateAcpCommand(shellConfigFilePath, true) // Force update when manually triggered.
+      const wasUpdated = autoUpdateAcpCommand()
+      if (wasUpdated) {
+        vscode.window.showInformationMessage("ACP command was updated")
       }
     }
   )
-
-  context.subscriptions.push(disposable)
 }
 
 function autoUpdateAcpCommand() {
   const shellConfigFilePath = getShellConfigFilePath()
   if (shellConfigFilePath) {
-    updateAcpCommand(shellConfigFilePath, false) // No force update, just check version.
+    console.log("Found shell config file: ", shellConfigFilePath)
+    return updateAcpCommand(shellConfigFilePath, false) // No force update, just check version.
+  } else {
+    console.log("No shell config file found for automatic updates.")
+    return false
   }
 }
 
@@ -37,11 +43,15 @@ function getShellConfigFilePath() {
   }
 
   const shellConfigFile = shellConfigFiles[os.platform()]
-  return shellConfigFile ? path.join(os.homedir(), shellConfigFile) : null
+  const fullPath = shellConfigFile
+    ? path.join(os.homedir(), shellConfigFile)
+    : null
+  console.log("Checking shell config file at: ", fullPath)
+  return fullPath
 }
 
 function updateAcpCommand(shellConfigFilePath, forceUpdate) {
-  const currentVersion = "0.6.8" // Update this as needed.
+  const currentVersion = "0.6.8" // Adjust this as needed.
   const newAcpFunction = getNewAcpFunction(currentVersion)
 
   try {
@@ -50,13 +60,20 @@ function updateAcpCommand(shellConfigFilePath, forceUpdate) {
     const existingVersionMatch = content.match(versionRegex)
     const existingVersion = existingVersionMatch
       ? existingVersionMatch[1]
-      : null
+      : "none"
 
+    console.log(
+      "Existing version: ",
+      existingVersion,
+      ", Current version: ",
+      currentVersion
+    )
     if (existingVersion !== currentVersion || forceUpdate) {
+      console.log("Updating ACP command due to version change or force update.")
       const startMarker = "# BEGIN: ACP Function"
       const endMarker = "# END: ACP Function"
       let startIndex = content.indexOf(startMarker)
-      let endIndex = content.indexOf(endMarker, startIndex)
+      let endIndex = content.indexOf(endMarker, startIndex + startMarker.length)
 
       if (startIndex !== -1 && endIndex !== -1) {
         endIndex += endMarker.length
@@ -69,17 +86,17 @@ function updateAcpCommand(shellConfigFilePath, forceUpdate) {
 
       fs.writeFileSync(shellConfigFilePath, content)
       vscode.window.showInformationMessage(
-        `ACP Command updated to version ${currentVersion}.`
+        `ACP Command automatically updated to version ${currentVersion} in ${shellConfigFilePath}`
       )
+    } else {
+      console.log("No update needed for ACP Command.")
     }
   } catch (error) {
     vscode.window.showErrorMessage(
-      `Failed to update ACP command: ${error.message}`
+      `Error occurred while updating ACP command: ${error.message}`
     )
   }
 }
-
-// Function to generate the new ACP function based on the current version
 
 function getNewAcpFunction(version) {
   return `
