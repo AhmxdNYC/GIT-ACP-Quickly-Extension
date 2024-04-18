@@ -51,7 +51,7 @@ function getShellConfigFilePath() {
 }
 
 function updateAcpCommand(shellConfigFilePath, forceUpdate) {
-  const currentVersion = "0.6.8" // Adjust this as needed.
+  const currentVersion = "0.6.6" // Adjust this as needed.
   const newAcpFunction = getNewAcpFunction(currentVersion)
 
   try {
@@ -181,6 +181,12 @@ function acp() {
 }
 
 function acm() {
+  # Check if inside a Git repository
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo -e "\\n\x1b[31mError: Not inside a Git repository.\\x1b[0m\\n"
+    return
+  fi
+
   echo -e "Preparing to add all changes and commit..."
 
   # First, check if a commit message was provided
@@ -191,11 +197,6 @@ function acm() {
 
   local commit_message="$*"
 
-  # Check if inside a Git repository
-  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    echo -e "\\n\x1b[31mError: Not inside a Git repository.\\x1b[0m\\n"
-    return
-  fi
 
   # Check if the HEAD is detached or the branch is valid
   local current_branch=$(git symbolic-ref --quiet --short HEAD)
