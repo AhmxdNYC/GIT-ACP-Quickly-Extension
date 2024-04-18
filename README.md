@@ -48,7 +48,11 @@ Visual demonstrations of the extension in action:
   ![No Repo](./images/NoRepo.png)
 
 - **Extras**
+
   - <sub>_Won't allow ACP from a detached state_.</sub>
+
+- testadd
+- testadd
 
 ## Installation
 

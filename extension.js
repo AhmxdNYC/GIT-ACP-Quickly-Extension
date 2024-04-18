@@ -51,7 +51,7 @@ function getShellConfigFilePath() {
 }
 
 function updateAcpCommand(shellConfigFilePath, forceUpdate) {
-  const currentVersion = "0.6.4" // Adjust this as needed.
+  const currentVersion = "0.6.0" // Adjust this as needed.
   const newAcpFunction = getNewAcpFunction(currentVersion)
 
   try {
@@ -220,6 +220,42 @@ function acm() {
     echo -e "\\n\x1b[31m----> Commit FAILED <----\\x1b[0m\\n"
   fi
 }
+
+function add() {
+
+  # First, check if inside a Git repository
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  echo -e "\\n\x1b[31mError: Not inside a Git repository.\\x1b[0m\\n"
+  return
+  fi
+
+  echo -e "\\nPreparing \\x1b[36mto\\x1b[0m add changes."
+
+  # Check if the HEAD is detached or the branch is valid
+  local current_branch=$(git symbolic-ref --quiet --short HEAD)
+  if [ -z "$current_branch" ]; then
+      echo -e "\\n\x1b[31mError: Repository is in a detached head state or the branch is not valid.\\x1b[0m"
+      echo "Please check out a branch to make your changes permanent.\\n"
+      return
+  fi
+
+  # Determine what to add based on the argument provided
+  if [ "$#" -eq 0 ]; then
+      echo "No specific files provided. Adding \\x1b[36mall\\x1b[0m changes...\\n"
+      git add -A
+  else
+      echo "Adding specified files..."
+      git add "$@"
+  fi
+
+  # Confirm what has been staged
+  git status --short
+  echo -e "\\n\x1b[32mFiles have been staged. Use \\x1b[33m'cm <message>'\\x1b[0m to commit these changes.\\x1b[0m\\n"
+}
+#
+# Usage
+# Add                  # Will add all changes
+# Add file1.txt file2.txt # Will add only file1.txt and file2.txt
 
 # END: ACP Function 
 `
