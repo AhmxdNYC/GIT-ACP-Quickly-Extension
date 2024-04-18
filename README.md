@@ -49,6 +49,7 @@ Visual demonstrations of the extension in action:
 
 - **Extras**
 
+
   - <sub>_Won't allow ACP from a detached state_.</sub>
 
 ## Installation
@@ -61,6 +62,8 @@ Visual demonstrations of the extension in action:
 3. **Restart Your Terminal**: To ensure the changes take effect, restart or refresh your terminal.
 
 4. **Thats it!**
+
+
 
 [Watch a 30-second tutorial on how to use ACP Quickly](https://www.youtube.com/watch?v=2lgWcGbtaz4)
 
