@@ -51,7 +51,7 @@ Visual demonstrations of the extension in action:
 
   - <sub>_Won't allow ACP from a detached state_.</sub>
 
-- testad
+- t
 
 ## Installation
 

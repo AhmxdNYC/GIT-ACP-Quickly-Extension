@@ -51,7 +51,7 @@ function getShellConfigFilePath() {
 }
 
 function updateAcpCommand(shellConfigFilePath, forceUpdate) {
-  const currentVersion = "0.6.0" // Adjust this as needed.
+  const currentVersion = "0.6.2" // Adjust this as needed.
   const newAcpFunction = getNewAcpFunction(currentVersion)
 
   try {
@@ -244,7 +244,7 @@ function add() {
       echo "No specific files provided. Adding \\x1b[36mall\\x1b[0m changes...\\n"
       git add -A
   else
-      echo "Adding specified files..."
+      echo "Adding specified files...\\n"
       git add "$@"
   fi
 
@@ -312,5 +312,3 @@ module.exports = {
 //   "publisher": "AhmadNYC",
 
 // Git ACP Enhanced: Add, Commit, Push   // second display name
-//
-////
