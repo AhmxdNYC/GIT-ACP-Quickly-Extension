@@ -251,8 +251,43 @@ function add() {
   # Confirm what has been staged
   git status --short
   echo -e "\\n\x1b[32mFiles have been staged. Use \\x1b[33m'cm <message>'\\x1b[0m to commit these changes.\\x1b[0m\\n"
+  echo -e "\\n\x1b[32mGreen = Ready for commit\\x1b[0m, \\x1b[31mRed = Not staged for commit\\x1b[0m\\n"
 }
-#
+
+function cm () {
+  # First, check if inside a Git repository
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  echo -e "\\n\x1b[31mError: Not inside a Git repository.\\x1b[0m\\n"
+  return
+  fi
+
+  # Check if a commit message was provided
+  if [ "$#" -eq 0 ]; then
+  echo -e "\\n\x1b[31mError: No commit message provided.\\x1b[0m\\n"
+  return
+  fi
+
+  local commit_message="$*"
+
+  # Check if the HEAD is detached or the branch is valid
+  local current_branch=$(git symbolic-ref --quiet --short HEAD)
+  if [ -z "$current_branch" ]; then
+  echo -e "\\n\x1b[31mError: Repository is in a detached head state or the branch is not valid.\\x1b[0m"
+  echo "Please check out a branch to make your changes permanent.\\n"
+  return
+  fi
+
+  # Commit changes
+  echo -e "Committing with message: $commit_message"
+  git commit -m "$commit_message"
+  if [[ $? -eq 0 ]]; then
+  echo -e "\\n\x1b[36mCommit Message:\\x1b[0m $commit_message\\n"
+  echo -e "\\x1b[32m----> Commit Successful <----\\x1b[0m\\n"
+  else
+  echo -e "\\n\x1b[31m----> Commit FAILED <----\\x1b[0m\\n"
+  fi
+}
+
 # Usage
 # Add                  # Will add all changes
 # Add file1.txt file2.txt # Will add only file1.txt and file2.txt
