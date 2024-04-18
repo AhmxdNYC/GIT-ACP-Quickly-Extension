@@ -51,8 +51,6 @@ Visual demonstrations of the extension in action:
 
   - <sub>_Won't allow ACP from a detached state_.</sub>
 
-- t
-
 ## Installation
 
 1. **Install the Extension**:

@@ -8,50 +8,97 @@ function activate(context) {
     'Congratulations, your extension "ACP-GIT-COMMAND" is now ACTIVE!'
   )
 
-  const wasUpdated = autoUpdateAcpCommand()
-  if (wasUpdated) {
-    vscode.window.showInformationMessage("ACP command was updated")
+  const shellConfigFilePath = getShellConfigFilePath()
+  if (shellConfigFilePath) {
+    const wasUpdated = autoUpdateAcpCommand(shellConfigFilePath)
+    if (wasUpdated) {
+      vscode.window.showInformationMessage(
+        "ACP command was successfully updated."
+      )
+    }
+  } else {
+    createInstructionFile()
+    vscode.window.showWarningMessage(
+      "No shell configuration file found. Instructions file created on desktop."
+    )
   }
 
   let disposable = vscode.commands.registerCommand(
     "acp-git-commands.installACPCommand",
     function () {
-      const wasUpdated = autoUpdateAcpCommand()
-      if (wasUpdated) {
-        vscode.window.showInformationMessage("ACP command was updated")
+      const shellConfigFilePath = getShellConfigFilePath()
+      if (shellConfigFilePath) {
+        const wasUpdated = autoUpdateAcpCommand(shellConfigFilePath)
+        if (wasUpdated) {
+          vscode.window.showInformationMessage(
+            "ACP command was successfully updated."
+          )
+        }
+      } else {
+        vscode.window.showWarningMessage(
+          "No shell configuration file found. Please check the instructions on your desktop."
+        )
       }
     }
   )
-}
 
-function autoUpdateAcpCommand() {
-  const shellConfigFilePath = getShellConfigFilePath()
-  if (shellConfigFilePath) {
-    console.log("Found shell config file: ", shellConfigFilePath)
-    return updateAcpCommand(shellConfigFilePath, false) // No force update, just check version.
-  } else {
-    console.log("No shell config file found for automatic updates.")
-    return false
-  }
+  context.subscriptions.push(disposable)
 }
 
 function getShellConfigFilePath() {
   const shellConfigFiles = {
-    darwin: ".zshrc",
-    linux: ".bashrc",
-    win32: ".bash_profile",
+    darwin: [".zshrc", "zsh"], // Look for .zshrc or a file simply named zsh
+    linux: [".bashrc", ".zshrc", "zsh"], // Include zsh in Linux
+    win32: [".bash_profile", ".zshrc", "zsh"], // Include zsh in Windows if applicable
   }
 
-  const shellConfigFile = shellConfigFiles[os.platform()]
-  const fullPath = shellConfigFile
-    ? path.join(os.homedir(), shellConfigFile)
-    : null
-  console.log("Checking shell config file at: ", fullPath)
-  return fullPath
+  const possibleFiles = shellConfigFiles[os.platform()]
+  for (const file of possibleFiles) {
+    const configPath = path.join(os.homedir(), file)
+    if (fs.existsSync(configPath)) {
+      console.log("Shell config file found at: ", configPath)
+      return configPath
+    }
+  }
+
+  console.log("No shell config file found for automatic updates.")
+  return null
+}
+
+function autoUpdateAcpCommand(shellConfigFilePath) {
+  if (shellConfigFilePath && fs.existsSync(shellConfigFilePath)) {
+    return updateAcpCommand(shellConfigFilePath, false)
+  } else {
+    console.log(
+      "Unable to find shell config file for updating: ",
+      shellConfigFilePath
+    )
+    return false
+  }
+}
+
+function createInstructionFile() {
+  const acpFunctionCode = getNewAcpFunction("0.6.8") // Fetch the current ACP function string
+  const instructions = `
+  # Manual Installation of ACP Command
+  No shell configuration file was found or it's not accessible.
+  Please manually add the following script to your shell configuration file (e.g., .bashrc, .bash_profile, .zshrc):
+
+  ${acpFunctionCode}
+
+  Save the file and source it to apply the changes, e.g., \`source ~/.bashrc\`
+  `
+
+  vscode.workspace
+    .openTextDocument({ content: instructions, language: "markdown" })
+    .then((document) => {
+      vscode.window.showTextDocument(document, { preview: false })
+    })
+  console.log("Instructions opened in a new VS Code editor tab.")
 }
 
 function updateAcpCommand(shellConfigFilePath, forceUpdate) {
-  const currentVersion = "0.6.2" // Adjust this as needed.
+  const currentVersion = "0.6.8"
   const newAcpFunction = getNewAcpFunction(currentVersion)
 
   try {
@@ -69,7 +116,6 @@ function updateAcpCommand(shellConfigFilePath, forceUpdate) {
       currentVersion
     )
     if (existingVersion !== currentVersion || forceUpdate) {
-      console.log("Updating ACP command due to version change or force update.")
       const startMarker = "# BEGIN: ACP Function"
       const endMarker = "# END: ACP Function"
       let startIndex = content.indexOf(startMarker)
@@ -80,16 +126,14 @@ function updateAcpCommand(shellConfigFilePath, forceUpdate) {
         let beforeFunction = content.substring(0, startIndex)
         let afterFunction = content.substring(endIndex)
         content = beforeFunction + newAcpFunction + afterFunction
+        fs.writeFileSync(shellConfigFilePath, content)
       } else {
         content += `\n${newAcpFunction}`
+        fs.writeFileSync(shellConfigFilePath, content)
       }
-
-      fs.writeFileSync(shellConfigFilePath, content)
       vscode.window.showInformationMessage(
         `ACP Command automatically updated to version ${currentVersion} in ${shellConfigFilePath}`
       )
-    } else {
-      console.log("No update needed for ACP Command.")
     }
   } catch (error) {
     vscode.window.showErrorMessage(
@@ -97,6 +141,8 @@ function updateAcpCommand(shellConfigFilePath, forceUpdate) {
     )
   }
 }
+
+// Get the new ACP function for the shell configuration
 
 function getNewAcpFunction(version) {
   return `
@@ -287,14 +333,13 @@ function cm () {
   echo -e "\\n\x1b[31m----> Commit FAILED <----\\x1b[0m\\n"
   fi
 }
-
-# Usage
-# Add                  # Will add all changes
-# Add file1.txt file2.txt # Will add only file1.txt and file2.txt
-
 # END: ACP Function 
 `
 }
+
+// # Usage
+// # Add                  # Will add all changes
+// # Add file1.txt file2.txt # Will add only file1.txt and file2.txt
 
 function deactivate() {}
 
