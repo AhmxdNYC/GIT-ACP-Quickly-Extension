@@ -25,55 +25,85 @@ Visual demonstrations of the extension in action:
 
   ![Commit Failed](./images/CommitFailed.gif)
 
+---
+
 - **Pull Before ACP**
 
   - <sub>_Won't add or commit if pull needed._</sub>
 
   ![Pull First](./images/PullFirst.png)
 
-- **Diverged from Remote**
+---
 
-  - <sub>_When your local and remote branches have diverged, Must use normal git commands._</sub>
+  <details>
+    <summary><strong>Checks included within ACP important!</strong></summary>
 
-  ![Diverged from Remote](./images/DivergedBranches.png)
+**Diverged from Remote**
 
-- **No Upstream Set**
+- <sub>_When your local and remote branches have diverged, you must use separate git commands._</sub>
 
-  - <sub>_checks if your branch has an upstream set before ACP. If not, it instructs how to set one._</sub>
+- ![Diverged from Remote](./images/DivergedBranches.png)
 
-  ![No Upstream Set](./images/NoUpstream.png)
+**No Upstream Set**
 
-- **No Repository Found**
+- <sub>_Checks if your branch has an upstream set before ACP. If not, it instructs how to set one. Only within ACP command._</sub>
 
-  ![No Repo](./images/NoRepo.png)
+- ![No Upstream Set](./images/NoUpstream.png)
 
-- **Extras**
+**No Repository Found**
 
+- ![No Repo](./images/NoRepo.png)
 
-  - <sub>_Won't allow ACP from a detached state_.</sub>
+**Extra**
+
+- <sub>_Won't allow any Commands from a detached state._</sub>
+
+</details>
+
+## More Commands -
+
+_These don't force being in sync with remote only `ACP` does._
+
+- **acm**
+
+  - <sub>_Add all and commit._</sub>
+
+  ![acm](./images/acm.png)
+
+---
+
+- **cm**
+
+  - <sub>_commit._</sub>
+
+  ![cm](./images/cm.png)
+
+---
+
+- **add**
+
+  - <sub>_On default adds all files. Takes in query for files as well._</sub>
+
+  ## ![addAll](./images/add%20all.png)
+
+  ![addSeparate](./images/add%20seperate.png)
 
 ## Installation
 
 1. **Install the Extension**:
    Download and install the extension from the Visual Studio Code Marketplace.
 
-2. **Activate the Command**: Use the command palette or (`Ctrl+Shift+P` or `Cmd+Shift+P` on macOS) and type:
-   - `Install ACP Command`: You should receive a notification that your shell file has been updated.
-3. **Restart Your Terminal**: To ensure the changes take effect, restart or refresh your terminal.
+2. **You should get a notification of success or error.**
+
+3. **Restart Your Terminals**: To ensure the changes take effect, restart or refresh your terminal.
 
 4. **Thats it!**
 
-
--0-0
-
-
-[Watch a 30-second tutorial on how to use ACP Quickly](https://www.youtube.com/watch?v=2lgWcGbtaz4)
-
 ## Usage Warning
 
-- **Special Characters**: The `acp` command supports commit messages without quotation marks for simple texts. For including special characters (e.g., `!#^@&^@$@()&*&(!!!>:<{|}>`), you will still need to encapsulate the message in quotes like this:
+- **Special Characters**: The `All Commands` support commit messages without quotation marks for simple texts and spaces. For including special characters (e.g., `!#^@&^@$@()&*&(!!!>:<{|}>`), you will still need to encapsulate the message in quotes like this:
 
-- acp " !#^@&^@$@()& \*&()!!!>:<{|}> "
+- `acp` " !#^@&^@$@()& \*&()!!!>:<{|}> "
 
 ## Requirements
 
@@ -83,7 +113,7 @@ No additional requirements are needed for this extension except git duh, as it u
 
 This extension does not require specific settings for basic operation but depends on your existing git configuration.
 
-To fully **remove** or **edit** the extension code, go into the config (zshrc or bash) file and delete the code for the acp function.
+To fully **remove** or **edit** the extension code, go into the config by doing `code . ShellFileExactName` file and delete the code for the acp function. Don't forget shell name can include special characters.
 
 ## Known Issues
 
@@ -93,6 +123,19 @@ No known issues at this time. Please contact me with any issues you are experien
 
 <details>
   <summary><strong>Notes!</strong> </summary>
+
+## 0.7.0 Release Notes
+
+### New Features and Enhancements:
+
+- **Zsh Support**: Reintroduced support for Zsh shell across all platforms (Darwin, Linux, Windows), enhancing the tool's compatibility.
+- **Improved Error Handling**: Refined error messages to provide clearer guidance and actions, particularly when the shell configuration file is not detected.
+- **Add Command Enhancement**: New `add` command functionality allows for specific or all files to be staged with detailed feedback on the action's success.
+- **ACM and Add Command Functionalities**: Updated `acm` and `add` commands to halt operations if no commit message is provided or if the repository is in a detached state.
+- **Temporary File Assistance**: When no shell configuration file is found, the extension now creates a temporary editable file in VS Code with manual setup instructions instead of creating a physical file on the desktop.
+- **Interface Improvements**: Enhanced markdown formatting for the extension's UI to better communicate the handling of different Git states and commands.
+
+- **User Guides and Support**: Updated documentation to include new features and commands, ensuring users fully understand how to utilize the new functionalities.
 
 ### 0.6.0
 

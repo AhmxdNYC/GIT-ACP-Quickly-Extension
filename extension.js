@@ -78,8 +78,12 @@ function autoUpdateAcpCommand(shellConfigFilePath) {
 }
 
 function createInstructionFile() {
-  const acpFunctionCode = getNewAcpFunction("0.6.6") // Fetch the current ACP function string
+  const acpFunctionCode = getNewAcpFunction("0.7.0") // Fetch the current ACP function string
   const instructions = `
+
+  !!!CONTACT ME FIRST BEFORE DOING THIS IF YOU CAN AND RUN echo $SHELL.
+  Send Results to me
+
   # Manual Installation of ACP Command
   No shell configuration file was found or it's not accessible.
   Please manually add the following script to your shell configuration file (e.g., .bashrc, .bash_profile, .zshrc):
