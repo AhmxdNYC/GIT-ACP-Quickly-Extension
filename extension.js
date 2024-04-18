@@ -78,7 +78,7 @@ function autoUpdateAcpCommand(shellConfigFilePath) {
 }
 
 function createInstructionFile() {
-  const acpFunctionCode = getNewAcpFunction("0.6.8") // Fetch the current ACP function string
+  const acpFunctionCode = getNewAcpFunction("0.6.6") // Fetch the current ACP function string
   const instructions = `
   # Manual Installation of ACP Command
   No shell configuration file was found or it's not accessible.
@@ -331,6 +331,40 @@ function cm () {
   echo -e "\\x1b[32m----> Commit Successful <----\\x1b[0m\\n"
   else
   echo -e "\\n\x1b[31m----> Commit FAILED <----\\x1b[0m\\n"
+  fi
+}
+
+function cm() {
+  # First, check if inside a Git repository
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo -e "\\n\x1b[31mError: Not inside a Git repository.\\x1b[0m\\n"
+    return
+  fi
+
+  # Check if a commit message was provided
+  if [ "$#" -eq 0 ]; then
+    echo -e "\\n\x1b[31mError: No commit message provided.\\x1b[0m\\n"
+    return 1
+  fi
+
+  local commit_message="$*"
+
+  # Check if the HEAD is detached or the branch is valid
+  local current_branch=$(git symbolic-ref --quiet --short HEAD)
+  if [ -z "$current_branch" ]; then
+    echo -e "\\n\x1b[31mError: Repository is in a detached head state or the branch is not valid.\\x1b[0m"
+    echo "Please check out a branch to make your changes permanent.\\n"
+    return
+  fi
+
+  # Commit changes
+  echo -e "Committing with message: $commit_message"
+  git commit -m "$commit_message"
+  if [[ $? -eq 0 ]]; then
+    echo -e "\\n\x1b[36mCommit Message:\\x1b[0m $commit_message\\n"
+    echo -e "\\x1b[32m----> Commit Successful <----\\x1b[0m\\n"
+  else
+    echo -e "\\n\x1b[31m----> Commit FAILED <----\\x1b[0m\\n"
   fi
 }
 # END: ACP Function 
