@@ -64,6 +64,8 @@ Visual demonstrations of the extension in action:
 4. **Thats it!**
 
 
+-0-0
+
 
 [Watch a 30-second tutorial on how to use ACP Quickly](https://www.youtube.com/watch?v=2lgWcGbtaz4)
 
