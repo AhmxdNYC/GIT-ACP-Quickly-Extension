@@ -100,7 +100,7 @@ function updateAcpCommand(shellConfigFilePath, forceUpdate) {
 
 function getNewAcpFunction(version) {
   return `
-# BEGIN: ACP Function
+# BEGIN: ACP Function - Git Add, Commit, Push - ACP Version: ${version} - DO NOT MODIFY THIS BLOCK MANUALLY # 
 # ACP Version: ${version}
 function acp() {
   echo -e "Checking repository status..."
@@ -179,7 +179,47 @@ function acp() {
     echo -e "\\n\\x1b[31m----> Commit FAILED <----\\x1b[0m\\n"
   fi
 }
-# END: ACP Function
+
+function acm() {
+  echo -e "Preparing to add all changes and commit..."
+
+  # First, check if a commit message was provided
+  if [ "$#" -eq 0 ]; then
+    echo -e "\\n\x1b[31mError: No commit message provided.\\x1b[0m\\n"
+    return 1
+  fi
+
+  local commit_message="$*"
+
+  # Check if inside a Git repository
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo -e "\\n\x1b[31mError: Not inside a Git repository.\\x1b[0m\\n"
+    return
+  fi
+
+  # Check if the HEAD is detached or the branch is valid
+  local current_branch=$(git symbolic-ref --quiet --short HEAD)
+  if [ -z "$current_branch" ]; then
+    echo -e "\\n\x1b[31mError: Repository is in a detached head state or the branch is not valid.\\x1b[0m"
+    echo "Please check out a branch to make your changes permanent.\\n"
+    return
+  fi
+
+  # Add all changes
+  git add -A
+  echo "All changes added."
+
+  # Commit changes
+  echo -e "Committing with message: $commit_message"
+  git commit -m "$commit_message"
+  if [[ $? -eq 0 ]]; then
+    echo -e "\\n\x1b[32m----> Commit Successful <----\\x1b[0m\\n"
+  else
+    echo -e "\\n\x1b[31m----> Commit FAILED <----\\x1b[0m\\n"
+  fi
+}
+
+# END: ACP Function 
 `
 }
 
