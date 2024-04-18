@@ -51,7 +51,7 @@ function getShellConfigFilePath() {
 }
 
 function updateAcpCommand(shellConfigFilePath, forceUpdate) {
-  const currentVersion = "0.6.6" // Adjust this as needed.
+  const currentVersion = "0.6.7" // Adjust this as needed.
   const newAcpFunction = getNewAcpFunction(currentVersion)
 
   try {
@@ -187,7 +187,7 @@ function acm() {
     return
   fi
 
-  echo -e "Preparing to add all changes and commit..."
+  echo -e "Preparing \\x1b[36mto\\x1b[0m add \\x1b[36mall\\ changes and commit..."
 
   # First, check if a commit message was provided
   if [ "$#" -eq 0 ]; then
@@ -208,12 +208,13 @@ function acm() {
 
   # Add all changes
   git add -A
-  echo "All changes added."
+  echo -e "\\x1b[36mAll\\x1b[0m changes added."
 
   # Commit changes
   echo -e "Committing with message: $commit_message"
   git commit -m "$commit_message"
   if [[ $? -eq 0 ]]; then
+    echo -e "\\n\\x1b[36mCommit Message:\\x1b[0m $commit_message\\n"
     echo -e "\\n\x1b[32m----> Commit Successful <----\\x1b[0m\\n"
   else
     echo -e "\\n\x1b[31m----> Commit FAILED <----\\x1b[0m\\n"
