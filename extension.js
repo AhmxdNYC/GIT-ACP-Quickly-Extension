@@ -51,7 +51,7 @@ function getShellConfigFilePath() {
 }
 
 function updateAcpCommand(shellConfigFilePath, forceUpdate) {
-  const currentVersion = "0.6.5" // Adjust this as needed.
+  const currentVersion = "0.6.4" // Adjust this as needed.
   const newAcpFunction = getNewAcpFunction(currentVersion)
 
   try {
@@ -187,7 +187,7 @@ function acm() {
     return
   fi
 
-  echo -e "Preparing \\x1b[36mto\\x1b[0m add \\x1b[36mall\\ changes and commit..."
+  echo -e "Preparing \\x1b[36mto\\x1b[0m add \\x1b[36mall\\x1b[0m changes and commit..."
 
   # First, check if a commit message was provided
   if [ "$#" -eq 0 ]; then
