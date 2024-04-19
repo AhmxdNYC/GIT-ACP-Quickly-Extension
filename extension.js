@@ -46,17 +46,60 @@ function activate(context) {
 }
 
 function getShellConfigFilePath() {
+  // const shellConfigFiles = {
+  //   darwin: [".zshrc", ".zsh", "zshrc"], // Look for .zshrc or a file simply named zsh
+  //   linux: [".bashrc", ".zshrc", ".zsh", "zshrc"], // Include zsh in Linux
+  //   win32: [".bash_profile", ".zshrc", ".zsh", "zshrc"], // Include zsh in Windows if applicable
+  // }
   const shellConfigFiles = {
-    darwin: [".zshrc", "zsh"], // Look for .zshrc or a file simply named zsh
-    linux: [".bashrc", ".zshrc", "zsh"], // Include zsh in Linux
-    win32: [".bash_profile", ".zshrc", "zsh"], // Include zsh in Windows if applicable
+    darwin: [
+      ".zshrc",
+      ".zprofile",
+      ".zshenv",
+      ".zlogin",
+      // "zsh", // might be fake not sure
+      ".zlogout",
+      "zshenv",
+      "zprofile",
+      "zlogin",
+      "zlogout",
+      // "zshrc", // Doesn't work if found , also could be fake
+    ],
+    linux: [
+      ".bashrc",
+      ".zshrc",
+      ".zprofile",
+      ".zshenv",
+      ".zlogin",
+      ".zlogout",
+      // "zsh",
+      "zshenv",
+      "zprofile",
+      "zlogin",
+      "zlogout",
+      // "zshrc", // Doesn't work if found
+    ],
+    win32: [
+      ".zshrc",
+      ".zprofile",
+      ".bash_profile",
+      ".zshenv",
+      ".zlogin",
+      ".zlogout",
+      // "zsh",
+      "zshenv",
+      "zprofile",
+      "zlogin",
+      "zlogout",
+      // "zshrc", // Doesn't work if found
+    ],
   }
 
   const possibleFiles = shellConfigFiles[os.platform()]
   for (const file of possibleFiles) {
     const configPath = path.join(os.homedir(), file)
     if (fs.existsSync(configPath)) {
-      console.log("Shell config file found at: ", configPath)
+      console.log(configPath, "FOUND SHELL CONFIG FILE")
       return configPath
     }
   }
@@ -78,7 +121,7 @@ function autoUpdateAcpCommand(shellConfigFilePath) {
 }
 
 function createInstructionFile() {
-  const acpFunctionCode = getNewAcpFunction("0.7.0") // Fetch the current ACP function string
+  const acpFunctionCode = getNewAcpFunction("0.7.5") // Fetch the current ACP function string
   const instructions = `
 
   !!!CONTACT ME FIRST BEFORE DOING THIS IF YOU CAN AND RUN echo $SHELL.
@@ -102,7 +145,7 @@ function createInstructionFile() {
 }
 
 function updateAcpCommand(shellConfigFilePath, forceUpdate) {
-  const currentVersion = "0.6.8"
+  const currentVersion = "0.7.5"
   const newAcpFunction = getNewAcpFunction(currentVersion)
 
   try {
@@ -136,12 +179,12 @@ function updateAcpCommand(shellConfigFilePath, forceUpdate) {
         fs.writeFileSync(shellConfigFilePath, content)
       }
       vscode.window.showInformationMessage(
-        `ACP Command automatically updated to version ${currentVersion} in ${shellConfigFilePath}`
+        `ACP CMD UPDATED: ${currentVersion} in ${shellConfigFilePath}`
       )
     }
   } catch (error) {
     vscode.window.showErrorMessage(
-      `Error occurred while updating ACP command: ${error.message}`
+      `ERROR OCCURRED DURING UPDATE ACP: ${error.message}`
     )
   }
 }
