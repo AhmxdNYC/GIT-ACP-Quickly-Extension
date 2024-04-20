@@ -8,13 +8,29 @@
     "url": "https://github.com/AhmxdNYC/GIT-ACP-Shortcut-Extension"
   },
   "icon": "images/icon.ico",
-  "version": "0.7.10",
+  "version": "0.8.0",
   "engines": {
     "vscode": "^1.88.0"
   },
   "categories": [
     "Other"
   ],
+  "configuration": {
+    "type": "object",
+    "title": "ACP Git Commands Settings",
+    "properties": {
+      "acpGitCommands.shellType": {
+        "type": "string",
+        "default": "",
+        "enum": [
+          "bash",
+          "zsh",
+          "powershell"
+        ],
+        "description": "Specify your shell type if you are not using the default for your system."
+      }
+    }
+  },
   "activationEvents": [
     "*",
     "onCommand:acp-git-commands.installACPCommand"
@@ -26,7 +42,17 @@
         "command": "acp-git-commands.installACPCommand",
         "title": "Install ACP Command"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Git Status Configuration",
+      "properties": {
+        "gitStatus.fetchInterval": {
+          "type": "number",
+          "default": 300000,
+          "description": "Interval in milliseconds at which to refresh the Git status. Set to 0 to disable."
+        }
+      }
+    }
   },
   "scripts": {
     "lint": "eslint .",

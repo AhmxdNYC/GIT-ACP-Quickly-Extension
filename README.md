@@ -1,8 +1,10 @@
-# ACP Quickly: Git Add, Commit & Push with a Single Command. No ""
+# ACP Quickly: Enhanced Git Integration for Efficient Workflow
+
+**Latest Update: NEW FEATURE QUICK STATUS (Remote sync status bar)!!**
 
 [Extension Link](https://marketplace.visualstudio.com/items?itemName=AhmadNYC.acp-git-commands)
 
-This extension streamlines the git workflow by enabling you to add, commit, and push changes with a single command, without the need for quotation marks.
+This extension enhances your Git workflow by enabling the execution of add, commit, and push commands through a streamlined, single command interface. It simplifies the command process by removing the need for quotation marks around commit messages and reduces the complexity of Git commands, making them shorter and more intuitive.
 
 - **Successful Push**
 
@@ -10,12 +12,14 @@ This extension streamlines the git workflow by enabling you to add, commit, and 
 
 ## Features
 
-- **Efficient Git Operations**: Perform git add, commit, and push operations with a single command directly from your editor.
-- **Forced Remote Sync**: Automatically ensures you're up-to-date with the remote repository before allowing pushes, keeping your workflow smooth and conflict-free.
-- **Customizable Commit Messages**: Directly type commit messages into the command, enabling quick updates and clear logs.
-- **Cross-Shell Compatibility**: Supports bash, zsh, and Windows Command Line, making it versatile across different environments.
+- **Efficient Git Operations**: Execute git add, commit, and push operations with a single command, directly from your editor, without the need for quotation marks.
+- **Simple Commands**: Condenses traditional Git commands into shorter versions that are easier to type and remember, eliminating the need for quotation marks even in commit messages that include spaces or periods.
+- **Real-Time Git Status**: Incorporates a dynamic status bar indicator that displays the current state of your Git repository. It provides immediate feedback if your branch is ahead, behind, or has diverged from the remote branch, enhancing your workflow by reducing the need to manually check the repository status.
+- **Forced Remote Sync**: ACP command ensures that your local repository is synchronized with the remote before allowing any push operations, thus avoiding conflicts and ensuring a smooth workflow.
+- **Customizable Commit Messages**: Allows you to directly type commit messages into the command line, streamlining the process of making quick updates or detailed logs.
+- **Cross-Shell Compatibility**: Provides support across multiple shell environments including bash, zsh, and Windows Command Line, ensuring functionality across various development setups.
 
-## Example Usage
+## Command Example Usage
 
 Visual demonstrations of the extension in action:
 
@@ -59,6 +63,36 @@ Visual demonstrations of the extension in action:
 - <sub>_Won't allow any Commands from a detached state._</sub>
 
 </details>
+
+## Quick Status - New Feature!
+
+Introducing real-time Git status updates directly in your status bar (left side), keeping you informed of your repository's state without interrupting your workflow!
+
+- **Up to Date**
+
+  ![upToDate](./images/statusbar-up%20-to0date.png)
+
+---
+
+- **Behind**
+
+  ![Behind](./images/statusbar-behind.png)
+
+---
+
+- **Diverged**
+
+  ![upToDate](./images/statusbar-diverged.png)
+
+---
+
+- **Not in a Repository**
+
+  ![upToDate](./images/statusbar-norepo.png)
+
+---
+
+_Updates could be delayed by up to 1 minute._
 
 ## More Commands -
 
@@ -113,17 +147,26 @@ No additional requirements are needed for this extension except git duh, as it u
 
 This extension does not require specific settings for basic operation but depends on your existing git configuration.
 
-To fully **remove** or **edit** the extension code, go into the config by doing `code . ShellFileExactName` file and delete the code for the acp function. Don't forget shell name can include special characters.
-
 ## Known Issues
 
 No known issues at this time. Please contact me with any issues you are experiencing.
 
 ## Release Notes
 
-<details>
-  <summary><strong>Notes!</strong> </summary>
+## 0.8.0 Release Notes
 
+#### New Features and Enhancements:
+
+- **Installation Fixes**: Fixed issue where user did not have a shell config file by creating one for them else update existing config.
+- **Version Update**: Updated to version 0.8.0 to include new features such as the Quick Status.
+- **Quick Status**: Added a new feature that provides real-time Git status updates directly in your status bar. This feature allows you to see at a glance whether your repository is ahead, behind, or diverged without running any commands.
+- **Enhanced Compatibility**: Improved support for bash on macOS, ensuring that users can seamlessly use the extension in their preferred shell environment.
+- **Performance Improvements**: Enhanced the overall performance of the extension, making it faster and more responsive when executing Git commands.
+- **On Uninstall**: The commands will actually be removed from your shell config file.
+
+<details>
+  <summary><strong>Older Notes!</strong> </summary>
+  
 ## 0.7.0 Release Notes
 
 ### New Features and Enhancements:
