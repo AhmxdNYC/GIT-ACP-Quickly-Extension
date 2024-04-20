@@ -530,5 +530,5 @@ module.exports = {
 //   "name": "acp-git-commands",
 //   "displayName": "Git ACP Quickly Add, Commit & Push",
 //   "publisher": "AhmadNYC",
-
+//
 // Git ACP Enhanced: Add, Commit, Push   // second display name
