@@ -135,7 +135,7 @@ _These don't force being in sync with remote only `ACP` does._
 
 ## Usage Warning
 
-- **Special Characters**: The `All Commands` support commit messages without quotation marks for simple texts and spaces. For including special characters (e.g., `!#^@&^@$@()&*&(!!!>:<{|}>`), you will still need to encapsulate the message in quotes like this:
+- **Special Characters**: The `All Commands` support commit messages without quotation marks for simple texts and spaces and `.,-_` . For including special characters (e.g., `!#^@&^@$@()&*&(!!!>:<{|}>`), you will still need to encapsulate the message in quotes like this:
 
 - `acp` " !#^@&^@$@()& \*&()!!!>:<{|}> "
 
