@@ -3,7 +3,7 @@ const os = require("os")
 const fs = require("fs")
 const path = require("path")
 
-const VERSION = "0.8.0"
+const VERSION = "0.8.6"
 
 function activate(context) {
   console.log(
@@ -247,9 +247,9 @@ function updateAcpCommand(shellConfigFilePath, forceUpdate) {
       }
 
       fs.writeFileSync(shellConfigFilePath, content)
-      vscode.window.showInformationMessage(
-        `ACP command updated to version ${VERSION} in ${shellConfigFilePath}. To check it out run \`code ${shellConfigFilePath}\` in the terminal.`
-      )
+      // vscode.window.showInformationMessage(
+      //   `ACP command updated to version ${VERSION} in ${shellConfigFilePath}. To check it out run \`code ${shellConfigFilePath}\` in the terminal.`
+      // )
     } else {
       console.log("No update needed or force update not set.")
     }

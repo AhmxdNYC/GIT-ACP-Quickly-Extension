@@ -80,6 +80,12 @@ Introducing real-time Git status updates directly in your status bar (left side)
 
 ---
 
+- **Ahead**
+
+  ![Behind](./images/statusbar-ahead.png)
+
+---
+
 - **Diverged**
 
   ![upToDate](./images/statusbar-diverged.png)
@@ -149,7 +155,9 @@ This extension does not require specific settings for basic operation but depend
 
 ## Known Issues
 
-No known issues at this time. Please contact me with any issues you are experiencing.
+1 Every VSCODE launch the first window will have update notification.- might be fixed.
+
+2 Will be updating to only work on git repo folders/Files next.
 
 ## Release Notes
 
