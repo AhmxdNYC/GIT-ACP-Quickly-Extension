@@ -1,6 +1,14 @@
-# ACP Quickly: Enhanced Git Integration for Efficient Workflow
+# ACP Quickly: Enhanced Git Integration for Efficient Workflow!
 
-**Latest Update: NEW FEATURE QUICK STATUS (Remote sync status bar)!!**
+**Latest Update: NEW FEATURE QUICK PUSH (ACP Shortcut)!!**
+
+**Latest Update: Extension activates only within git workspaces (Improves startup performance)!!**
+
+**Last Update: NEW FEATURE QUICK STATUS (Remote sync status bar)!!**
+
+Quick Status works <span style="color: red;">regardless</span> of user shell.
+
+Other Features <span style="color: red;">require</span> Z Shell or Bash. More shell support coming later.
 
 [Extension Link](https://marketplace.visualstudio.com/items?itemName=AhmadNYC.acp-git-commands)
 
@@ -12,7 +20,7 @@ This extension enhances your Git workflow by enabling the execution of add, comm
 
 ## Features
 
-- **Efficient Git Operations**: Execute git add, commit, and push operations with a single command, directly from your editor, without the need for quotation marks.
+- **Efficient Git Operations**: Execute git add, commit, and push operations with a single command or **key bind**, directly from your editor, without the need for quotation marks.
 - **Simple Commands**: Condenses traditional Git commands into shorter versions that are easier to type and remember, eliminating the need for quotation marks even in commit messages that include spaces or periods.
 - **Real-Time Git Status**: Incorporates a dynamic status bar indicator that displays the current state of your Git repository. It provides immediate feedback if your branch is ahead, behind, or has diverged from the remote branch, enhancing your workflow by reducing the need to manually check the repository status.
 - **Forced Remote Sync**: ACP command ensures that your local repository is synchronized with the remote before allowing any push operations, thus avoiding conflicts and ensuring a smooth workflow.
@@ -100,6 +108,17 @@ Introducing real-time Git status updates directly in your status bar (left side)
 
 _Updates could be delayed by up to 1 minute._
 
+## Introducing Quick Push: Seamless ACP
+
+With a simple keystroke, Quick Push automatically types 'acp' into your current terminal, or opens a new one if no terminal is active.
+
+### Keybindings:
+
+- **Mac**: `CMD` + `OPTION` + `P`
+- **Windows**: `CTRL` + `ALT` + `P`
+
+- **Change**: In your keyboard shortcuts under `Quick Push`
+
 ## More Commands -
 
 _These don't force being in sync with remote only `ACP` does._
@@ -135,7 +154,7 @@ _These don't force being in sync with remote only `ACP` does._
 
 2. **You should get a notification of success or error.**
 
-3. **Restart Your Terminals**: To ensure the changes take effect, restart or refresh your terminal.
+3. **Open Any Git Workspace**
 
 4. **Thats it!**
 
@@ -155,11 +174,23 @@ This extension does not require specific settings for basic operation but depend
 
 ## Known Issues
 
-1 Every VSCODE launch the first window will have update notification.- might be fixed.
+None currently but please contact me if any are found.
 
-2 Will be updating to only work on git repo folders/Files next.
+Will be making more shells compatible.
 
 ## Release Notes
+
+## 0.9.0 Release Notes
+
+#### New Features and Enhancements:
+
+- **Quick Push**: Introduced the Quick Push feature, which allows you to perform Git add, commit, and push operations with a single command from VSCode, either via a shortcut or from the command palette.
+- **Activation Optimization**: The extension now activates only within Git workspaces, enhancing its performance and usability by ensuring that Git commands are executed only in relevant contexts.
+- **Terminal Optimization**: Enhanced the terminal handling to ensure that the 'acp' command is prepared in the active terminal without closing it, preserving the session's state.
+- **Custom Terminal Names**: Added functionality to handle terminal sessions dynamically, allowing the extension to reopen terminals with their original names, thus maintaining a consistent development environment.
+
+<details>
+  <summary><strong>Older Notes!</strong> </summary>
 
 ## 0.8.0 Release Notes
 
@@ -172,9 +203,6 @@ This extension does not require specific settings for basic operation but depend
 - **Performance Improvements**: Enhanced the overall performance of the extension, making it faster and more responsive when executing Git commands.
 - **On Uninstall**: The commands will actually be removed from your shell config file.
 
-<details>
-  <summary><strong>Older Notes!</strong> </summary>
-  
 ## 0.7.0 Release Notes
 
 ### New Features and Enhancements:

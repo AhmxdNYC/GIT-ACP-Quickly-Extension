@@ -8,7 +8,7 @@
     "url": "https://github.com/AhmxdNYC/GIT-ACP-Shortcut-Extension"
   },
   "icon": "images/icon.ico",
-  "version": "0.8.6",
+  "version": "0.9.0",
   "engines": {
     "vscode": "^1.88.0"
   },
@@ -32,8 +32,7 @@
     }
   },
   "activationEvents": [
-    "*",
-    "onCommand:acp-git-commands.installACPCommand"
+    "workspaceContains:.git/config"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -41,6 +40,10 @@
       {
         "command": "acp-git-commands.installACPCommand",
         "title": "Install ACP Command"
+      },
+      {
+        "command": "extension.acpCommand",
+        "title": "Quick Push"
       }
     ],
     "configuration": {
@@ -52,7 +55,14 @@
           "description": "Interval in milliseconds at which to refresh the Git status. Set to 0 to disable."
         }
       }
-    }
+    },
+    "keybindings": [
+      {
+        "command": "extension.acpCommand",
+        "key": "ctrl+alt+p",
+        "mac": "cmd+alt+p"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",

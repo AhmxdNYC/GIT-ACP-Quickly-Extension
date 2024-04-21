@@ -3,7 +3,7 @@ const os = require("os")
 const fs = require("fs")
 const path = require("path")
 
-const VERSION = "0.8.6"
+const VERSION = "0.9.0"
 
 function activate(context) {
   console.log(
@@ -16,7 +16,10 @@ function activate(context) {
   gitStatusIndicator.text = `$(sync~spin) Initializing...`
   gitStatusIndicator.show()
   context.subscriptions.push(gitStatusIndicator)
-
+  const acpCommandDisposable = vscode.commands.registerCommand(
+    "extension.acpCommand",
+    openTerminalAndRunAcp
+  )
   updateGitStatus(gitStatusIndicator) // Initial update
   const gitWatcher = vscode.workspace.createFileSystemWatcher(
     "**/.git/{HEAD,refs/heads/*,refs/remotes/*,index}"
@@ -75,6 +78,31 @@ function activate(context) {
       updateGitStatus(gitStatusIndicator)
     })
   )
+  console.log("acp run command before push")
+
+  context.subscriptions.push(acpCommandDisposable)
+  console.log("acp run command pushed")
+}
+
+function openTerminalAndRunAcp() {
+  console.log("Preparing to send 'acp' command...")
+
+  // Check if there is an active terminal
+  let currentTerminal = vscode.window.activeTerminal
+
+  if (!currentTerminal) {
+    // If no active terminal, create a new one with the name of the current workspace
+    const workspaceName = vscode.workspace.name || "Default Workspace"
+    currentTerminal = vscode.window.createTerminal({ name: workspaceName })
+  }
+
+  // Show the terminal window
+  currentTerminal.show()
+
+  // Delay the sendText to allow the terminal to initialize properly if it was newly created
+  setTimeout(() => {
+    currentTerminal.sendText("acp ", false) // This places 'acp' in the command line without executing it
+  }, 230) // Adjust the delay as needed based on your environment
 }
 
 function setupFetchInterval(gitStatusIndicator, context) {
@@ -250,6 +278,13 @@ function updateAcpCommand(shellConfigFilePath, forceUpdate) {
       // vscode.window.showInformationMessage(
       //   `ACP command updated to version ${VERSION} in ${shellConfigFilePath}. To check it out run \`code ${shellConfigFilePath}\` in the terminal.`
       // )
+      const activeTerminal = vscode.window.activeTerminal
+      if (activeTerminal) {
+        const terminalName = activeTerminal.name
+        activeTerminal.dispose()
+        const newTerminal = vscode.window.createTerminal({ name: terminalName })
+        newTerminal.show()
+      }
     } else {
       console.log("No update needed or force update not set.")
     }
