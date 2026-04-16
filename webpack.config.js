@@ -1,34 +1,29 @@
-const path = require("path")
+const path = require("path");
 
 module.exports = {
   mode: "production",
-  entry: "./extension.js", // Your main entry point
-  target: "node", // Target node because VS Code extensions run in a Node.js context
+  entry: "./src/extension.ts",
+  target: "node",
   resolve: {
-    extensions: [".js"], // Resolve JavaScript files
+    extensions: [".ts", ".js"],
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.ts$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"], // Transpile to compatible JavaScript
-          },
-        },
+        use: "ts-loader",
       },
     ],
   },
   output: {
     path: path.resolve(__dirname, "out"),
-    filename: "extension.js", // The bundled output file
+    filename: "extension.js",
     libraryTarget: "commonjs2",
     devtoolModuleFilenameTemplate: "../[resource-path]",
   },
   externals: {
-    vscode: "commonjs vscode", // Tells Webpack not to bundle the 'vscode' module
+    vscode: "commonjs vscode",
   },
-  devtool: "source-map", // Enable sourcemaps for debugging
-}
+  devtool: "source-map",
+};

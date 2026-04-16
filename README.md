@@ -1,18 +1,10 @@
 # ACP Quickly: Enhanced Git Integration for Efficient Workflow!
 
-**Latest Update: NEW FEATURE QUICK PUSH (ACP Shortcut)!!**
-
-**Latest Update: Extension activates only within git workspaces (Improves startup performance)!!**
-
-**Last Update: NEW FEATURE QUICK STATUS (Remote sync status bar)!!**
-
-Quick Status works <span style="color: red;">regardless</span> of user shell.
-
-Other Features <span style="color: red;">require</span> Z Shell or Bash. More shell support coming later.
+**Latest Update: v1.0.0 — TypeScript refactor, fish shell support, and bug fixes!**
 
 [Extension Link](https://marketplace.visualstudio.com/items?itemName=AhmadNYC.acp-git-commands)
 
-This extension enhances your Git workflow by enabling the execution of add, commit, and push commands through a streamlined, single command interface. It simplifies the command process by removing the need for quotation marks around commit messages and reduces the complexity of Git commands, making them shorter and more intuitive.
+This extension enhances your Git workflow by enabling the execution of add, commit, and push commands through a streamlined, single command interface. It removes the need for quotation marks around commit messages and reduces Git commands to short, memorable aliases.
 
 - **Successful Push**
 
@@ -20,16 +12,24 @@ This extension enhances your Git workflow by enabling the execution of add, comm
 
 ## Features
 
-- **Efficient Git Operations**: Execute git add, commit, and push operations with a single command or **key bind**, directly from your editor, without the need for quotation marks.
-- **Simple Commands**: Condenses traditional Git commands into shorter versions that are easier to type and remember, eliminating the need for quotation marks even in commit messages that include spaces or periods.
-- **Real-Time Git Status**: Incorporates a dynamic status bar indicator that displays the current state of your Git repository. It provides immediate feedback if your branch is ahead, behind, or has diverged from the remote branch, enhancing your workflow by reducing the need to manually check the repository status.
-- **Forced Remote Sync**: ACP command ensures that your local repository is synchronized with the remote before allowing any push operations, thus avoiding conflicts and ensuring a smooth workflow.
-- **Customizable Commit Messages**: Allows you to directly type commit messages into the command line, streamlining the process of making quick updates or detailed logs.
-- **Cross-Shell Compatibility**: Provides support across multiple shell environments including bash, zsh, and Windows Command Line, ensuring functionality across various development setups.
+- **Efficient Git Operations**: Execute git add, commit, and push with a single command or **keybind**, directly from your editor — no quotation marks needed.
+- **Simple Commands**: Condenses traditional Git commands into shorter versions that are easier to type and remember, even for commit messages with spaces or punctuation.
+- **Real-Time Git Status**: A dynamic status bar indicator shows whether your branch is ahead, behind, or diverged from the remote at a glance.
+- **Forced Remote Sync**: The `acp` command checks that your local branch is in sync with remote before pushing, preventing conflicts.
+- **Customizable Commit Messages**: Type commit messages directly on the command line — no quotes required for normal messages.
+- **Cross-Shell Compatibility**: Full support for **bash**, **zsh**, and **fish**. The Quick Status indicator works in all environments regardless of shell.
+
+## Shell Support
+
+| Shell | Status |
+|-------|--------|
+| zsh | ✅ Supported |
+| bash | ✅ Supported |
+| fish | ✅ Supported (added in v1.0.0) |
+
+If your shell is not auto-detected, set it manually under **Settings → ACP Git Commands → Shell Type**.
 
 ## Command Example Usage
-
-Visual demonstrations of the extension in action:
 
 - **Successful Push Above**
 
@@ -41,24 +41,24 @@ Visual demonstrations of the extension in action:
 
 - **Pull Before ACP**
 
-  - <sub>_Won't add or commit if pull needed._</sub>
+  - <sub>_Won't add or commit if a pull is needed._</sub>
 
   ![Pull First](./images/PullFirst.png)
 
 ---
 
   <details>
-    <summary><strong>Checks included within ACP important!</strong></summary>
+    <summary><strong>Safety checks included in ACP</strong></summary>
 
 **Diverged from Remote**
 
-- <sub>_When your local and remote branches have diverged, you must use separate git commands._</sub>
+- <sub>_When your local and remote branches have diverged, you must resolve it manually._</sub>
 
 - ![Diverged from Remote](./images/DivergedBranches.png)
 
 **No Upstream Set**
 
-- <sub>_Checks if your branch has an upstream set before ACP. If not, it instructs how to set one. Only within ACP command._</sub>
+- <sub>_ACP checks for an upstream before pushing and tells you exactly how to set one._</sub>
 
 - ![No Upstream Set](./images/NoUpstream.png)
 
@@ -68,185 +68,148 @@ Visual demonstrations of the extension in action:
 
 **Extra**
 
-- <sub>_Won't allow any Commands from a detached state._</sub>
+- <sub>_No commands will run from a detached HEAD state._</sub>
 
 </details>
 
-## Quick Status - New Feature!
+## Quick Status
 
-Introducing real-time Git status updates directly in your status bar (left side), keeping you informed of your repository's state without interrupting your workflow!
+Real-time Git status in your status bar (bottom left), always visible without running any commands.
 
-- **Up to Date**
+- **Up to Date** — ![upToDate](./images/statusbar-up%20-to0date.png)
+- **Behind** — ![Behind](./images/statusbar-behind.png)
+- **Ahead** — ![Behind](./images/statusbar-ahead.png)
+- **Diverged** — ![upToDate](./images/statusbar-diverged.png)
+- **Not in a Repository** — ![upToDate](./images/statusbar-norepo.png)
 
-  ![upToDate](./images/statusbar-up%20-to0date.png)
+_Status refreshes on file changes and window focus. Remote sync (fetch) runs every 5 minutes._
 
----
+## Quick Push: Seamless ACP
 
-- **Behind**
+A single keystroke types `acp` into your current terminal, or opens a new one if none is active.
 
-  ![Behind](./images/statusbar-behind.png)
-
----
-
-- **Ahead**
-
-  ![Behind](./images/statusbar-ahead.png)
-
----
-
-- **Diverged**
-
-  ![upToDate](./images/statusbar-diverged.png)
-
----
-
-- **Not in a Repository**
-
-  ![upToDate](./images/statusbar-norepo.png)
-
----
-
-_Updates could be delayed by up to 1 minute._
-
-## Introducing Quick Push: Seamless ACP
-
-With a simple keystroke, Quick Push automatically types 'acp' into your current terminal, or opens a new one if no terminal is active.
-
-### Keybindings:
+### Keybindings
 
 - **Mac**: `CMD` + `OPTION` + `P`
-- **Windows**: `CTRL` + `ALT` + `P`
+- **Windows/Linux**: `CTRL` + `ALT` + `P`
+- **Change**: Keyboard Shortcuts → search `Quick Push`
 
-- **Change**: In your keyboard shortcuts under `Quick Push`
+## More Commands
 
-## More Commands -
+_These do not enforce remote sync — only `acp` does._
 
-_These don't force being in sync with remote only `ACP` does._
-
-- **acm**
-
-  - <sub>_Add all and commit._</sub>
+- **acm** — Add all and commit.
 
   ![acm](./images/acm.png)
 
 ---
 
-- **cm**
-
-  - <sub>_commit._</sub>
+- **cm** — Commit only (no add).
 
   ![cm](./images/cm.png)
 
 ---
 
-- **add**
+- **add** — Stage files. Adds all by default, or pass specific files.
 
-  - <sub>_On default adds all files. Takes in query for files as well._</sub>
-
-  ## ![addAll](./images/add%20all.png)
+  ![addAll](./images/add%20all.png)
 
   ![addSeparate](./images/add%20seperate.png)
 
 ## Installation
 
-1. **Install the Extension**:
-   Download and install the extension from the Visual Studio Code Marketplace.
-
-2. **You should get a notification of success or error.**
-
-3. **Open Any Git Workspace**
-
-4. **Thats it!**
+1. Install from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=AhmadNYC.acp-git-commands).
+2. Open any Git workspace — the extension activates automatically.
+3. A success notification confirms the shell functions were installed.
+4. That's it. Open a new terminal and run `acp your commit message`.
 
 ## Usage Warning
 
-- **Special Characters**: The `All Commands` support commit messages without quotation marks for simple texts and spaces and `.,-_` . For including special characters (e.g., `!#^@&^@$@()&*&(!!!>:<{|}>`), you will still need to encapsulate the message in quotes like this:
+- **Special Characters**: All commands support commit messages without quotes for normal text, spaces, and common punctuation (`. , - _`). For special characters (e.g., `! # ^ @ & * ( ) > < { | }`), wrap the message in quotes:
 
-- `acp` " !#^@&^@$@()& \*&()!!!>:<{|}> "
+  `acp "fix: resolve edge case with !important flag"`
 
 ## Requirements
 
-No additional requirements are needed for this extension except git duh, as it uses your existing git setup. Just restart or terminate your terminals after installation.
+Git must be installed. No other dependencies. Restart any open terminals after the first install so the shell functions are sourced.
 
 ## Extension Settings
 
-This extension does not require specific settings for basic operation but depends on your existing git configuration.
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `acpGitCommands.shellType` | _(auto-detect)_ | Override shell detection. Options: `bash`, `zsh`, `fish`. |
+| `gitStatus.fetchInterval` | `300000` | How often (ms) to fetch from remote for status bar. Set to `0` to disable. |
 
 ## Known Issues
 
-None currently but please contact me if any are found.
-
-Will be making more shells compatible.
+None currently. Please open an issue on [GitHub](https://github.com/AhmxdNYC/GIT-ACP-Quickly-Extension) if you find one.
 
 ## Release Notes
 
-## 0.9.0 Release Notes
+## 1.0.0
 
-#### New Features and Enhancements:
+#### TypeScript Refactor & Fish Shell Support
 
-- **Quick Push**: Introduced the Quick Push feature, which allows you to perform Git add, commit, and push operations with a single command from VSCode, either via a shortcut or from the command palette.
-- **Activation Optimization**: The extension now activates only within Git workspaces, enhancing its performance and usability by ensuring that Git commands are executed only in relevant contexts.
-- **Terminal Optimization**: Enhanced the terminal handling to ensure that the 'acp' command is prepared in the active terminal without closing it, preserving the session's state.
-- **Custom Terminal Names**: Added functionality to handle terminal sessions dynamically, allowing the extension to reopen terminals with their original names, thus maintaining a consistent development environment.
+- **TypeScript**: Rewrote entire extension in TypeScript with strict mode. Codebase split into four focused modules (`extension`, `statusBar`, `shellConfig`, `shellScripts`).
+- **Fish shell support**: Added full support for the fish shell. All four commands (`acp`, `acm`, `add`, `cm`) are available in idiomatic fish syntax. Config written to `~/.config/fish/config.fish` (directory created automatically if missing).
+- **Shell setting now works**: The `acpGitCommands.shellType` VS Code setting is actually read and respected — previously it was ignored entirely.
+- **Performance**: `git fetch` no longer runs on every file save or tab switch. Remote fetches happen only on the 5-minute interval; local status reads (`git status -sb`) handle all other updates.
+- **Bug fixes**: Resolved duplicate `cm()` function definition in shell script, early-return in `activate()` that prevented the Quick Push command from registering on first install, double command registration, and double event listener subscription.
 
 <details>
-  <summary><strong>Older Notes!</strong> </summary>
+  <summary><strong>Older release notes</strong></summary>
 
-## 0.8.0 Release Notes
+## 0.9.0
 
-#### New Features and Enhancements:
+- **Quick Push**: Type `acp` into your terminal with a single keystroke (`CMD+OPT+P` / `CTRL+ALT+P`) or via the command palette.
+- **Activation Optimization**: Extension now activates only within Git workspaces.
+- **Terminal Optimization**: The `acp` command is prepared in the active terminal without closing it.
+- **Custom Terminal Names**: Terminals reopen with their original names after a config update.
 
-- **Installation Fixes**: Fixed issue where user did not have a shell config file by creating one for them else update existing config.
-- **Version Update**: Updated to version 0.8.0 to include new features such as the Quick Status.
-- **Quick Status**: Added a new feature that provides real-time Git status updates directly in your status bar. This feature allows you to see at a glance whether your repository is ahead, behind, or diverged without running any commands.
-- **Enhanced Compatibility**: Improved support for bash on macOS, ensuring that users can seamlessly use the extension in their preferred shell environment.
-- **Performance Improvements**: Enhanced the overall performance of the extension, making it faster and more responsive when executing Git commands.
-- **On Uninstall**: The commands will actually be removed from your shell config file.
+## 0.8.0
 
-## 0.7.0 Release Notes
+- **Installation Fixes**: Creates a shell config file if one doesn't exist.
+- **Quick Status**: Real-time Git status in the status bar — ahead, behind, or diverged at a glance.
+- **Enhanced Compatibility**: Improved bash support on macOS.
+- **On Uninstall**: ACP functions are removed from your shell config on extension uninstall.
 
-### New Features and Enhancements:
+## 0.7.0
 
-- **Zsh Support**: Reintroduced support for Zsh shell across all platforms (Darwin, Linux, Windows), enhancing the tool's compatibility.
-- **Improved Error Handling**: Refined error messages to provide clearer guidance and actions, particularly when the shell configuration file is not detected.
-- **Add Command Enhancement**: New `add` command functionality allows for specific or all files to be staged with detailed feedback on the action's success.
-- **ACM and Add Command Functionalities**: Updated `acm` and `add` commands to halt operations if no commit message is provided or if the repository is in a detached state.
-- **Temporary File Assistance**: When no shell configuration file is found, the extension now creates a temporary editable file in VS Code with manual setup instructions instead of creating a physical file on the desktop.
-- **Interface Improvements**: Enhanced markdown formatting for the extension's UI to better communicate the handling of different Git states and commands.
-
-- **User Guides and Support**: Updated documentation to include new features and commands, ensuring users fully understand how to utilize the new functionalities.
+- **Zsh Support**: Reintroduced Zsh support across all platforms.
+- **Improved Error Handling**: Clearer guidance when shell config is not detected.
+- **Add Command Enhancement**: `add` can now stage specific files with detailed feedback.
+- **Temporary File Assistance**: When no config file is found, instructions open in a VS Code editor tab instead of writing to the desktop.
 
 ### 0.6.0
 
-- **New Feature**: Added error handling for commands run outside of Git repositories to enhance user feedback.
+- Added error handling for commands run outside of Git repositories.
 
 ### 0.5.0
 
-- **Version Checking**: Integrated version checking to ensure users always run the latest ACP command script.
+- Version checking to ensure users always run the latest ACP script.
 
 ### 0.4.0
 
-- **Branch Sync Enhancements**: Enhanced the extension to handle local branch comparisons with remote, manage divergences, and ensure required pulls are made before pushing.
+- Enhanced branch sync — handles divergence and enforces pulls before pushing.
 
 ### 0.3.0
 
-- **Automatic Updates**: Implemented automatic updates for the ACP function to synchronize with extension updates.
+- Automatic updates for the ACP shell function on extension update.
 
 ### 0.2.0
 
-- **Detached Head and Upstream Handling**: Added handling for detached HEAD states and upstream branch settings, improving stability and usability.
+- Detached HEAD and upstream branch handling.
 
 ### 0.1.0
 
-- **Initial Release**: Set up the basic functionality of the ACP command, laying the foundation for future enhancements.
+- Initial release.
 
 </details>
 
 ## For more information
 
-- [My Github](https://github.com/AhmxdNYC)
-- [My Linkedin](https://www.linkedin.com/in/ahmad-hamza-/)
+- [GitHub](https://github.com/AhmxdNYC/GIT-ACP-Quickly-Extension)
+- [My GitHub Profile](https://github.com/AhmxdNYC)
+- [My LinkedIn](https://www.linkedin.com/in/ahmad-hamza-/)
 
-**Enjoy using ACP Quickly! This tool is designed to make your coding and version control process smoother and faster.**
-
-# GIT-ACP-Shortcut-Extension
+**Enjoy using ACP Quickly — designed to make version control faster and less friction.**
