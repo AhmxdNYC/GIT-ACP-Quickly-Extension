@@ -5,7 +5,7 @@
   "description": "Adds a custom function to your shell configuration to Git Add, Commit & Push with a single command!",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AhmxdNYC/GIT-ACP-Shortcut-Extension"
+    "url": "https://github.com/AhmxdNYC/GIT-ACP-Quickly-Extension"
   },
   "icon": "images/icon.ico",
   "version": "1.0.0",
